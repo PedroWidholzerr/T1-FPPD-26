@@ -91,29 +91,3 @@ scripts/              check.ps1  test.ps1  bench.ps1  agrega.ps1
 relatorio/            relatorio.md (rascunho)  dados/ (CSVs, base-deadlock.txt, tabelas.md)
 AI-USO.md             registro do uso de IA
 ```
-
-## Perguntas prováveis da apresentação
-
-- **Por que a main fecha o channel (e não um produtor)?** Fechar um channel com alguém ainda enviando causa `panic`.
-  Só a main sabe que *todos* os produtores terminaram (esperou o `Latch`), então só ela pode chamar `close`.
-  Os consumidores continuam recebendo o que sobrou e só então veem `ok == false`.
-- **Por que dois mutexes (`muIn` e `muOut`) na versão com semáforos?** Os semáforos só garantem que *existe* uma vaga/um item;
-  não impedem dois produtores de escolherem o mesmo `in` (nem dois consumidores o mesmo `out`). Um mutex por ponta protege
-  cada índice; separados, um produtor e um consumidor trabalham ao mesmo tempo (posições diferentes do anel).
-- **Por que a `base` trava?** Cada filósofo pega o garfo esquerdo e dorme `-pausa`; todos pegam o esquerdo antes de qualquer um
-  pegar o direito → cada um segura um garfo e espera o do vizinho, formando um ciclo. As 4 condições de Coffman valem.
-- **Qual condição de Coffman cada estratégia quebra?** `hierarquia` e `limite`: **espera circular** (garfos numerados;
-  no máximo N−1 sentados). `garcom`: **posse e espera** (recebe os dois garfos juntos ou nenhum). A exclusão mútua e a
-  não-preempção continuam valendo em todas.
-- **Por que o benchmark é sem `-race`?** O detector instrumenta cada acesso à memória e distorce (e retarda) os tempos.
-  A corretude já foi validada com `-race`; as medidas usam binários compilados normalmente (`go build`), não `go run`.
-- **Por que a versão com semáforos é mais lenta?** Cada `Put`/`Get` faz 4 operações em channel (Acquire, Lock, Unlock, Release)
-  contra 1 do channel nativo, e os mutexes `muIn`/`muOut` serializam produtores e consumidores. Nos dados: sem atraso,
-  K=100, o channel fez ~4× o throughput da versão `sem` (ver `relatorio/dados/tabelas.md`).
-  Com atrasos (cenários A/B) o custo da sincronização some atrás do `Sleep`.
-- **Como o watchdog detecta deadlock sem `sync`?** Os filósofos mandam eventos por um channel; a main faz `select` entre
-  receber um evento e `time.After(timeout)`. Nenhum evento no tempo e ainda há filósofos ativos → deadlock.
-- **Por que o garçom usa fila FIFO estrita?** Evita starvation (ninguém fura a fila). O custo é paralelismo: se a cabeça da
-  fila espera por um garfo, quem está atrás espera também, mesmo que seus garfos estejam livres.
-- **Por que `Unlock` de mutex destravado dá `panic`?** É erro de programação; com `select/default` detectamos o channel vazio
-  em vez de bloquear para sempre.
