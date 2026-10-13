@@ -7,13 +7,14 @@
 foram implementados pelo grupo em cima de **channels** (`mutex.go`, `semaforo.go`, `latch.go`, copiados em cada pasta,
 pois cada problema é um programa independente).
 
-## Pré-requisitos (Windows + PowerShell)
+## Pré-requisitos (Windows + PowerShell, ou Linux)
 
 - **Go** (o `go.mod` pede `go 1.27`): `winget install GoLang.Go`
 - **gcc** — obrigatório para `go run -race` no Windows (o detector de race usa cgo):
   `winget install BrechtSanders.WinLibs.POSIX.UCRT`
 - Abra um terminal **novo** depois de instalar (para o PATH atualizar). Confira com `go version`, `go env CGO_ENABLED` (deve ser `1`) e `gcc --version`.
-- Não é preciso `make`; os scripts são PowerShell.
+- **Linux:** instale Go (`go 1.27`) e gcc (`sudo apt install gcc` ou equivalente; o `-race` precisa de cgo). Os scripts `.sh` só precisam de `bash` e `awk`.
+- Não é preciso `make`; os scripts são PowerShell. Há uma versão `.ps1` (Windows) e uma `.sh` (Linux) de cada script.
 
 ## Scripts
 
@@ -25,6 +26,17 @@ pois cada problema é um programa independente).
 | `.\scripts\agrega.ps1` | agrega os CSVs em `relatorio\dados\tabelas.md` (mediana e [mín–máx]) |
 
 Se o PowerShell bloquear scripts: `powershell -ExecutionPolicy Bypass -File .\scripts\check.ps1`.
+
+### Linux
+
+| Comando | O que faz |
+|---|---|
+| `./scripts/check.sh` | igual ao `check.ps1` |
+| `./scripts/test.sh` | `go test -race ./...` |
+| `./scripts/bench.sh [reps]` | compila em `bin/` e roda os experimentos (padrão 5 repetições; ~4 min) |
+| `./scripts/agrega.sh` | gera `relatorio/dados/tabelas.md` (mesma saída do `agrega.ps1`) |
+
+Se faltar permissão de execução: `chmod +x scripts/*.sh` (ou `bash scripts/check.sh`).
 
 ## Problema 1 — Filósofos
 
@@ -87,7 +99,7 @@ O programa termina com `VERIFICAÇÃO FINAL: OK` (nada perdido, nada repetido, `
 ```
 filosofos/            main.go (laço do filósofo, monitor/watchdog)  estrategias.go  stats.go  mutex.go semaforo.go latch.go
 produtor-consumidor/  main.go  buffer.go  buffer_channel.go  buffer_sem.go  stats.go  mutex.go semaforo.go latch.go
-scripts/              check.ps1  test.ps1  bench.ps1  agrega.ps1
+scripts/              check, test, bench, agrega (.ps1 para Windows, .sh para Linux)
 relatorio/            relatorio.md (rascunho)  dados/ (CSVs, base-deadlock.txt, tabelas.md)
 AI-USO.md             registro do uso de IA
 ```

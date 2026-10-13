@@ -18,7 +18,7 @@ Toda a sincronização é feita pelo grupo em cima de **channels** (`chan`, `sel
   `mutex.go`, `semaforo.go`, `latch.go` ficam **copiados** (idênticos) nas duas pastas.
 - Parâmetros por `flag`. Encerramento ordenado, sem goroutines bloqueadas
   (exceção: `-estrategia=base`, que trava de propósito e é detectada por watchdog).
-- Ambiente: Windows + PowerShell. Scripts em `scripts/*.ps1`. Código Go portátil.
+- Ambiente: Windows + PowerShell (`scripts/*.ps1`) e Linux (`scripts/*.sh`, equivalentes). Código Go portátil.
 - Commits pequenos, em português: `tipo: descrição` (`feat:`, `test:`, `docs:`, `chore:`, `fix:`).
 - Relatório: só usar números que vieram dos CSVs em `relatorio/dados/`; interpretações do grupo marcadas `[CONFIRMAR]`.
 
