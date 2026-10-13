@@ -109,7 +109,7 @@ Produtores chamam `Latch.Done` ao terminar seus itens. A main espera todos, para
 
 ## 4. Uso de IA
 
-Ver `AI-USO.md`. Resumo: o Claude Code (Sonnet 5.5) projetou e gerou o código, os testes, os scripts e os experimentos a partir de um roteiro escrito pelo grupo; corrigiu problemas de ambiente (instalação de Go/gcc, SSH, PowerShell 5.1) e de medição (duração 0 no Windows). O grupo revisou e [CONFIRMAR] se responsabiliza por cada afirmação.
+Ver `AI-USO.md`. A arquitetura das soluções e o raciocínio de como resolver cada problema (estratégias contra deadlock, monitor/watchdog por channels, primitivos sobre channels, encerramento ordenado, desenho dos experimentos) foram definidos e desenvolvidos pelo grupo, que os descreveu em um roteiro detalhado. A ferramenta de IA (Claude Code, modelo Sonnet 5.5) foi usada apenas para **gerar o código** e os **testes** a partir desse roteiro, além de scripts de apoio (PowerShell) e do ajuste de problemas de ambiente e medição (instalação de Go/gcc, SSH, PowerShell 5.1, duração 0 no Windows). Os resultados dos experimentos foram **conferidos pelo grupo**, que executou e revisou o código e se responsabiliza por cada afirmação deste relatório.
 
 ## 5. Referências
 
