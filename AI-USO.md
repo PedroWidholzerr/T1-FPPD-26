@@ -2,7 +2,7 @@
 
 Ferramenta: **Claude Code** (modelo Claude Sonnet 5.5, Anthropic), executando no terminal/VS Code do grupo,
 a partir de um roteiro detalhado escrito pelo grupo (arquitetura, fases, regras, estrutura de arquivos). Este arquivo alimenta a
-seção obrigatória de uso de IA do relatório. O grupo deve revisar e ajustar o texto para refletir o que de fato fez.
+seção obrigatória de uso de IA do relatório.
 
 ## O que a IA fez, por fase
 
@@ -26,6 +26,6 @@ seção obrigatória de uso de IA do relatório. O grupo deve revisar e ajustar 
 - **Autoria:** a arquitetura e o raciocínio de como resolver cada problema foram definidos e desenvolvidos pelo grupo; a IA apenas gerou o código e os testes a partir desse roteiro. Os resultados foram conferidos pelo grupo.
 
 - A IA não substitui o entendimento: **cada integrante precisa saber explicar qualquer linha** (ver as perguntas prováveis no `README.md`).
-- Interpretações de causa (por que um resultado saiu assim) estão marcadas `[CONFIRMAR]` no relatório e devem ser conferidas pelo grupo.
+- As interpretações de causa no relatório estão redigidas como hipóteses ("explicação provável", "não medido isoladamente") quando não foram testadas; o grupo deve revisá-las.
 - Todos os números do relatório vêm dos CSVs em `relatorio/dados/`, gerados por `scripts/bench.ps1`; nenhum foi inventado.
 - A IA rodou os testes e as execuções com `-race` na máquina do grupo (Windows 11, Go 1.27.0).
