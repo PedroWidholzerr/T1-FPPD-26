@@ -44,19 +44,16 @@ type Evento struct {
 
 func main() {
 	var cfg Config
-	var pensarMs, comerMs, pausaMs, timeoutMs float64
 	flag.IntVar(&cfg.N, "n", 5, "número de filósofos (>= 2)")
 	flag.IntVar(&cfg.R, "r", 10, "ciclos por filósofo")
 	flag.StringVar(&cfg.Estrategia, "estrategia", "hierarquia", "base|hierarquia|limite|garcom")
-	flag.Float64Var(&pensarMs, "pensar", 10, "duração média de pensar (ms, jitter ±50%)")
-	flag.Float64Var(&comerMs, "comer", 10, "duração média de comer (ms, jitter ±50%)")
-	flag.Float64Var(&pausaMs, "pausa", 50, "espera entre o 1º e o 2º garfo na base (ms)")
-	flag.Float64Var(&timeoutMs, "timeout", 2000, "watchdog: ms sem eventos para declarar deadlock")
+	flag.DurationVar(&cfg.Pensar, "pensar", 10*time.Millisecond, "duração média de pensar (jitter ±50%)")
+	flag.DurationVar(&cfg.Comer, "comer", 10*time.Millisecond, "duração média de comer (jitter ±50%)")
+	flag.DurationVar(&cfg.Pausa, "pausa", 50*time.Millisecond, "espera entre o 1º e o 2º garfo na base")
+	flag.DurationVar(&cfg.Timeout, "timeout", 2*time.Second, "watchdog: tempo sem eventos para declarar deadlock")
 	flag.Int64Var(&cfg.Seed, "seed", 1, "semente do gerador aleatório")
 	flag.StringVar(&cfg.CSV, "csv", "", "arquivo CSV para anexar resultados (opcional)")
 	flag.Parse()
-	cfg.Pensar, cfg.Comer = msParaDur(pensarMs), msParaDur(comerMs)
-	cfg.Pausa, cfg.Timeout = msParaDur(pausaMs), msParaDur(timeoutMs)
 
 	if cfg.N < 2 || cfg.R < 0 {
 		fmt.Println("uso inválido: precisa de -n >= 2 e -r >= 0")
@@ -144,8 +141,6 @@ func main() {
 		os.Exit(1)
 	}
 }
-
-func msParaDur(v float64) time.Duration { return time.Duration(v * float64(time.Millisecond)) }
 
 // filosofo executa exatamente R ciclos: pensar -> fome -> pegar -> comer -> soltar.
 // O laço é o mesmo para qualquer estratégia.
