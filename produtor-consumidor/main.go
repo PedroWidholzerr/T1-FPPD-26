@@ -206,7 +206,7 @@ func verificar(cfg Config, rs []Resultado, inicio time.Time, ocup float64) (Resu
 		fmt.Printf("ERRO: consumidos %d, produzidos %d\n", r.Total, esperado)
 		ok = false
 	}
-	if !ultimo.IsZero() {
+	if !ultimo.IsZero() && ultimo.After(inicio) { // evita dividir por 0 se a medição for curta demais
 		r.Duracao = ultimo.Sub(inicio)
 		r.Throughput = float64(r.Total) / r.Duracao.Seconds()
 	}

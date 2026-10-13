@@ -1,4 +1,4 @@
-# Falha (exit 1) se algum .go importar sync, sync/atomic ou context; depois roda go vet.
+﻿# Falha (exit 1) se algum .go importar sync, sync/atomic ou context; depois roda go vet.
 $ErrorActionPreference = 'Stop'
 Set-Location (Split-Path $PSScriptRoot -Parent)
 

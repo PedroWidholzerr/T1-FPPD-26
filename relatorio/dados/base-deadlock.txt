@@ -1,0 +1,7 @@
+﻿
+DEADLOCK DETECTADO (nenhum evento em 2s, estratégia=base)
+  filósofo 0: pegou-esquerdo segura garfo 0 e espera o garfo 1 (refeições concluídas: 0)
+  filósofo 1: pegou-esquerdo segura garfo 1 e espera o garfo 2 (refeições concluídas: 0)
+  filósofo 2: pegou-esquerdo segura garfo 2 e espera o garfo 3 (refeições concluídas: 0)
+  filósofo 3: pegou-esquerdo segura garfo 3 e espera o garfo 4 (refeições concluídas: 0)
+  filósofo 4: pegou-esquerdo segura garfo 4 e espera o garfo 0 (refeições concluídas: 0)
