@@ -1,0 +1,10 @@
+# binários e artefatos de build
+bin/
+*.exe
+*.test
+*.out
+# sistema / editores
+.DS_Store
+.idea/
+.vscode/
+# (relatorio/dados/ é versionado de propósito)
